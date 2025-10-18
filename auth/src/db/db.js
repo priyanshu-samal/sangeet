@@ -6,8 +6,8 @@ import _config from "../config/config.js";
 async function connectDB() {
   try {
     await mongoose.connect(_config.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      
+      
     });
     console.log("Connected to MongoDB");
   } catch (error) {

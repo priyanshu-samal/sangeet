@@ -1,5 +1,5 @@
 {
-  "name": "auth",
+  "name": "notification",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,15 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.9",
-    "bcryptjs": "^3.0.2",
-    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "express-validator": "^7.2.1",
-    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.1",
-    "morgan": "^1.10.1",
-    "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0"
+    "nodemailer": "^7.0.9"
   }
 }

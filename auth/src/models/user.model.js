@@ -10,22 +10,32 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
     fullname:{
-        firstName:{
+        firstname:{
             type: String,
             required: true,
         },
-        lastName:{
+        lastname:{
             type: String,
             required: true,
         }
     },
     password:{
         type: String,
-        required: true,
+        required: function() { return !this.googleId; },
     
     },
     googleId:{
         type: String,
+    },
+    role:{
+        type: String,
+        enum: ['user', 'artist'],
+        default: 'user',
     }
 
-})
+},{timestamps: true})
+
+
+const userModel = mongoose.model('User', userSchema);
+
+export default userModel;
