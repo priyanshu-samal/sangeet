@@ -121,7 +121,7 @@ graph TD
     end
 
     subgraph "Data & Events"
-        subgraph Databases
+        subgraph "Databases"
             DB1[(Auth DB)]
             DB2[(Music DB)]
         end
