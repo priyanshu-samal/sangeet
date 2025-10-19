@@ -121,32 +121,18 @@ graph TD
     end
 
     subgraph "Data & Events"
-        subgraph "Databases"
-            DB1[(Auth DB)]
-            DB2[(Music DB)]
-        end
-        
-        subgraph "Message Broker"
-            N[RabbitMQ];
-        end
-
-        subgraph "File Storage"
-            S3[AWS S3];
-        end
+        DB1[(Auth DB)]
+        DB2[(Music DB)]
+        N[RabbitMQ]
+        S3[AWS S3]
     end
 
-    %% Service to DB Connections
+    %% Connections
     C --- DB1;
     D --- DB2;
-
-    %% HTTP Communications
     D --> S3;
-
-    %% Event Publishing
     C -- "USER_CREATED" --> N;
     D -- "NEW_SONG_UPLOADED" --> N;
-
-    %% Event Consumption
     N -- "USER_CREATED" --> O;
     N -- "NEW_SONG_UPLOADED" --> O;
 ```
