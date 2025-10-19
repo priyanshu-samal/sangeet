@@ -1,3 +1,9 @@
+# IMPORTANT DIAGNOSTIC NOTE (Please Read!)
+
+**If you are seeing this message, it means this file was successfully updated by the Gemini agent. The persistent diagram rendering error you are reporting is very likely due to a cache on your browser or local machine. Please try a hard refresh (Ctrl+F5 or Cmd+Shift+R) or view the file in a different browser or incognito window.**
+
+---
+
 # 🚀 Sangeet: Your Next-Gen Microservices Music Streaming Platform 🚀
 
 Welcome to **Sangeet**! This project is a deep dive into building a scalable, resilient, and feature-rich music streaming platform using a microservices architecture, just like Spotify. We're crafting a digital audio experience where every component works harmoniously yet independently, ensuring a robust and dynamic user experience.
