@@ -1,78 +1,24 @@
-# IMPORTANT DIAGNOSTIC NOTE (Please Read!)
+# 🎵 Sangeet: Your Microservices-Powered Music Application 🎵
 
-**If you are seeing this message, it means this file was successfully updated by the Gemini agent. The persistent diagram rendering error you are reporting is very likely due to a cache on your browser or local machine. Please try a hard refresh (Ctrl+F5 or Cmd+Shift+R) or view the file in a different browser or incognito window.**
-
----
-
-# 🚀 Sangeet: Your Next-Gen Microservices Music Streaming Platform 🚀
-
-Welcome to **Sangeet**! This project is a deep dive into building a scalable, resilient, and feature-rich music streaming platform using a microservices architecture, just like Spotify. We're crafting a digital audio experience where every component works harmoniously yet independently, ensuring a robust and dynamic user experience.
+Welcome to **Sangeet**! This project is an ambitious journey to build a scalable, resilient, and feature-rich music streaming platform, like Spotify, using a microservices architecture.
 
 ## ✨ The Sangeet Vision: Why Microservices?
 
-Imagine a music platform that can grow to millions of users, where new features like podcasting or live audio can be added without disrupting existing ones, and where a hiccup in one area (like recommendations) doesn't bring down the entire service. That's the power of microservices, and that's the vision for Sangeet!
+Imagine a music app that can handle millions of users, where new features can be added without disrupting existing ones, and where a hiccup in one area doesn't bring down the entire platform. That's the power of microservices, and that's the vision for Sangeet!
 
 We're breaking down the traditional monolithic application into smaller, manageable, and independently deployable services. This approach brings a plethora of benefits:
 
--   **Scalability:** Each service (auth, music, sync) can be scaled independently based on its demand.
+-   **Scalability:** Each service (authentication, music streaming, notifications) can be scaled independently based on its demand.
 -   **Resilience:** A failure in one service won't cascade and affect the entire application.
 -   **Agility:** Faster development cycles and easier deployment of new features.
 -   **Technology Diversity:** Freedom to choose the best technology stack for each service.
 
 ## 🗺️ Architectural Blueprint: How It All Connects
 
-Sangeet is designed as a constellation of specialized services, each handling a distinct domain of the music streaming ecosystem.
+Sangeet is designed as a constellation of specialized services, each handling a distinct domain of the music ecosystem.
 
 -   **Asynchronous Communication with RabbitMQ:** To ensure seamless and fault-tolerant communication, we use **RabbitMQ** as a message broker. This acts as the central nervous system, allowing services to communicate asynchronously. For example, when a user registers, the `Auth Service` publishes a `USER_CREATED` event, and the `Notification Service` consumes this event to send a welcome email, all without the services being directly dependent on each other.
-
--   **AWS Cloud Hosting:** Each microservice is designed to find its home on **Amazon Web Services (AWS)**. We envision deploying these services independently on **Amazon ECS (Elastic Container Service)**, leveraging AWS's robust infrastructure for high availability and scalability. Music files will be stored in **AWS S3** for durable, scalable, and fast access.
-
-## 🐳 Containerization with Docker
-
-Each microservice in the Sangeet platform is containerized using Docker. This ensures that each service has a consistent and isolated environment, making it easy to develop, test, and deploy the services independently. The `dockerfile` for each service is based on the `node:18-alpine` image and follows a standard pattern to ensure consistency.
-
-## 🚀 Getting Started: Join the Sangeet Journey!
-
-Ready to dive into the code? Head over to the [Local Development](#-local-development) section to get Sangeet up and running on your local machine.
-
-## 🏡 Local Development
-
-Follow these steps to get Sangeet up and running on your local machine:
-
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/sangeet.git
-    ```
-2.  **Set up environment variables:**
-    Each service requires its own set of environment variables to run correctly. Navigate to each service's directory (`auth`, `notification`), create a `.env` file in each, and add the necessary variables. Refer to the [Environment Variables](#-environment-variables) section for a complete list.
-
-3.  **Install dependencies and run the services:**
-    For each service you want to run:
-    ```bash
-    cd sangeet/<service-name>  # e.g., cd sangeet/auth
-    npm install
-    npm run dev
-    ```
-    You will need to run each service in a separate terminal window.
-
-## 🔑 Environment Variables
-
-Each service requires a `.env` file in its root directory with the following environment variables:
-
-### Auth Service (`/auth/.env`)
--   `MONGO_URI`: The connection string for your MongoDB database.
--   `JWT_SECRET`: A secret key for signing JWT tokens.
--   `RABBITMQ_URI`: The connection string for your RabbitMQ instance.
--   `CLIENT_ID`: Google OAuth 2.0 Client ID.
--   `CLIENT_SECRET`: Google OAuth 2.0 Client Secret.
-
-### Notification Service (`/notification/.env`)
--   `RABBITMQ_URI`: The connection string for your RabbitMQ instance.
--   `EMAIL_USER`: Your email address for sending notifications.
--   `CLIENT_ID`: Google OAuth 2.0 Client ID for Nodemailer.
--   `CLIENT_SECRET`: Google OAuth 2.0 Client Secret for Nodemailer.
--   `REFRESH_TOKEN`: Google OAuth 2.0 Refresh Token for Nodemailer.
--   `MONGO_URI`: (If needed for templates or logging) The connection string for your MongoDB database.
+-   **AWS Cloud Hosting:** Each microservice is designed to be deployed independently on **Amazon Web Services (AWS)**, leveraging services like ECS for container orchestration and S3 for music file storage.
 
 ## ☁️ AWS Deployment
 
@@ -86,25 +32,25 @@ The containerized nature of the Sangeet services makes them ideal for deployment
     -   Docker installed on your local machine.
 
 2.  **Create an ECR Repository for Each Service:**
-    For each microservice (`auth`, `notification`, etc.), create a new private repository in Amazon Elastic Container Registry (ECR).
+    For each microservice, create a new private repository in Amazon Elastic Container Registry (ECR).
 
 3.  **Build and Push Docker Images:**
-    For each service, navigate to its directory, build its Docker image, and push it to its ECR repository.
+    For each service, navigate to its directory, build the Docker image, and push it to its ECR repository.
 
 4.  **Set up an ECS Cluster:**
-    Create a new ECS cluster to run your containers. The Fargate (serverless) launch type is recommended for ease of use.
+    Create a new ECS cluster to run your containers. You can choose between the Fargate (serverless) or EC2 launch types.
 
 5.  **Create Task Definitions:**
-    For each service, create a new task definition in ECS. In the task definition, you will specify the ECR image, CPU/memory resources, port mappings, and **define the environment variables** required for the service to run. Use AWS Secrets Manager for sensitive values.
+    For each service, create a new task definition in ECS. In the task definition, you will specify the Docker image, CPU/memory resources, port mappings, and the necessary environment variables.
 
 6.  **Create Services:**
-    For each task definition, create a new service in your ECS cluster. This will manage running the tasks and handle auto-scaling and resilience.
+    For each task definition, create a new service in your ECS cluster to run and maintain your tasks.
 
 7.  **Set up an Application Load Balancer (ALB):**
-    Create an ALB to route incoming traffic to your services. Configure listener rules to route traffic based on the path (e.g., `/api/auth/*` goes to the auth service).
+    Create an ALB to route incoming traffic to your services based on path rules (e.g., `/api/auth/*` goes to the auth service).
 
-8.  **Set up S3 for Music Storage:**
-    Create an S3 bucket to store music files. Ensure the Music Service has the correct IAM permissions to upload to this bucket and that files are configured for public read access if they are to be streamed directly to clients.
+8.  **Configure Security Groups:**
+    Ensure your security groups are configured correctly to allow traffic between the ALB, the ECS tasks, and other AWS resources.
 
 ## 📊 Architecture and Flow Diagrams
 
@@ -157,8 +103,8 @@ sequenceDiagram
     Auth_Service->>Auth_DB: Check if user exists
     alt User does not exist
         Auth_Service->>Auth_DB: Save new user with hashed password
-        Auth_Service->>RabbitMQ: Publish 'user_registration' event
-        RabbitMQ-->>Notification_Service: Consume 'user_registration' event
+        Auth_Service->>RabbitMQ: Publish 'USER_CREATED' event
+        RabbitMQ-->>Notification_Service: Consume 'USER_CREATED' event
         Notification_Service-->>Notification_Service: Send Welcome Email
         Auth_Service-->>Client: 201 Created {user, token}
     else User exists
@@ -189,48 +135,28 @@ sequenceDiagram
 ## 🌟 Current Services Spotlight
 
 ### 🔐 Auth Service
-
--   **Port:** `3000` (example)
--   **Description:** The gatekeeper of Sangeet. This service handles user registration (including Google OAuth), and authentication. It issues JWTs that are sent as `httpOnly` cookies to secure the platform. Upon registration, it publishes a `user_registration` event to RabbitMQ.
--   **Key Technologies:** `Node.js`, `Express`, `MongoDB`, `JWT`, `bcryptjs`, `passport`, `amqplib`.
+-   **Description:** The gatekeeper of Sangeet. This service is responsible for user registration, login, and token validation. It ensures that only legitimate users can access protected resources.
+-   **Key Technologies:** `Node.js`, `Express`, `MongoDB`, `JWT`, `bcryptjs`, `amqplib`.
 
 #### API Endpoints
 
-| Method | Endpoint                       | Description                      | Auth Required |
-| :----- | :----------------------------- | :------------------------------- | :------------ |
-| POST   | `/register`                    | Register a new user              | No            |
-| GET    | `/google`                      | Initiate Google OAuth login      | No            |
-| GET    | `/google/callback`             | Google OAuth callback URL        | No            |
+| Method | Endpoint             | Description          | Auth Required |
+| :----- | :------------------- | :------------------- | :------------ |
+| POST   | `/api/auth/register` | Register a new user  | No            |
+| POST   | `/api/auth/login`    | Login a user         | No            |
+| GET    | `/api/auth/me`       | Get current user     | Yes           |
+
+### 🎵 Music Service (Placeholder)
+-   **Description:** The heart of our catalog. This service will manage all music-related operations, including uploading, streaming, and retrieving song details. It will integrate with AWS S3 for file storage.
+-   **Key Technologies:** `Node.js`, `Express`, `MongoDB`, `AWS-SDK`.
+
+### 🔄 Sync Service (Placeholder)
+-   **Description:** This service provides the real-time magic. Using WebSockets, it ensures that playback is synchronized across multiple devices logged in with the same user account, providing a seamless listening experience.
+-   **Key Technologies:** `Node.js`, `Express`, `socket.io`.
 
 ### 🔔 Notification Service
-
--   **Port:** `3001` (example)
--   **Description:** This service works behind the scenes to keep users informed. It listens for `user_registration` events from RabbitMQ and sends a welcome email to new users.
+-   **Description:** This service works behind the scenes to keep users informed. It listens for events (like `USER_CREATED`) from other services via RabbitMQ and sends out notifications.
 -   **Key Technologies:** `Node.js`, `Express`, `amqplib`, `nodemailer`.
 -   **Consumed Events:**
-    -   `user_registration`
-
-## 🚧 Roadmap to Awesomeness: What's Next for Sangeet?
-
--   [x] **Auth Service:** Secure user authentication and authorization.
--   [x] **Notification Service:** Listens to events and sends emails.
--   [x] **RabbitMQ Integration:** Implement robust asynchronous communication.
--   [x] **Docker Containerization:** Containerize all microservices.
--   [ ] **Music Service:** To handle music uploads, storage (S3), and streaming.
--   [ ] **Sync Service:** A WebSocket-based service for real-time playback synchronization across devices.
--   [ ] **Frontend Application:** Develop a captivating user interface using React and Vite.
--   [ ] **Complete AWS Deployment:** Deploy all services to a production-ready AWS environment.
-
-## 🛠️ Core Technologies Powering Sangeet
-
--   **Node.js & Express.js:** For building robust and efficient backend services.
--   **MongoDB:** As the primary NoSQL database for flexible data storage.
--   **JWT & Passport.js:** For secure, industry-standard authentication.
--   **RabbitMQ:** For asynchronous, event-driven communication between microservices.
--   **Docker:** For containerizing our microservices for consistent deployment.
--   **AWS (ECS, S3, ALB):** Our target cloud platform for scalable and resilient deployment.
--   **WebSockets:** For real-time features like synchronized playback.
-
-## 👋 Contributing: Be a Part of Sangeet!
-
-We welcome contributions from everyone! Whether it's a bug fix, a new feature, or an improvement to the documentation, your input is invaluable. Please feel free to open an issue or submit a pull request. Let's build something amazing together!
+    -   `USER_CREATED`
+    -   `NEW_SONG_UPLOADED`
