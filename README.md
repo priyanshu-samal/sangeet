@@ -59,34 +59,34 @@ The containerized nature of the Sangeet services makes them ideal for deployment
 ```mermaid
 graph TD
     subgraph "User Interaction"
-        A[Client Browser/App] --> B(API Gateway / ALB);
+        A[Client Browser/App] --> B["API Gateway / ALB"]
     end
 
     subgraph "Core Services"
-        B --> C[Auth Service];
-        B --> D[Music Service];
-        B --> E[Sync Service (WebSocket)];
+        B --> C[Auth Service]
+        B --> D[Music Service]
+        B --> E["Sync Service (WebSocket)"]
     end
 
     subgraph "Supporting Services"
-        O[Notification Service];
+        O[Notification Service]
     end
 
     subgraph "Data & Events"
         DB1[(Auth DB)]
         DB2[(Music DB)]
-        N[RabbitMQ]
-        S3[AWS S3]
+        N[(RabbitMQ)]
+        S3[(AWS S3)]
     end
 
     %% Connections
-    C --- DB1;
-    D --- DB2;
-    D --> S3;
-    C -- "USER_CREATED" --> N;
-    D -- "NEW_SONG_UPLOADED" --> N;
-    N -- "USER_CREATED" --> O;
-    N -- "NEW_SONG_UPLOADED" --> O;
+    C --- DB1
+    D --- DB2
+    D --> S3
+    C -- "USER_CREATED" --> N
+    D -- "NEW_SONG_UPLOADED" --> N
+    N -- "USER_CREATED" --> O
+    N -- "NEW_SONG_UPLOADED" --> O
 ```
 
 ### User Authentication Flow
