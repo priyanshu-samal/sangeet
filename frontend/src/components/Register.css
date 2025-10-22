@@ -24,6 +24,12 @@
   color: var(--text-color);
 }
 
+.role-selection {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .register-form button {
   padding: 0.5rem;
   border-radius: 4px;

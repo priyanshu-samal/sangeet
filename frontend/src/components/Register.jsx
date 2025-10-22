@@ -10,6 +10,13 @@ const Register = () => {
         <input type="text" placeholder="First Name" />
         <input type="text" placeholder="Last Name" />
         <input type="password" placeholder="Password" />
+        <div className="role-selection">
+          <label>I am a:</label>
+          <input type="radio" id="listener" name="role" value="listener" defaultChecked />
+          <label htmlFor="listener">Listener</label>
+          <input type="radio" id="artist" name="role" value="artist" />
+          <label htmlFor="artist">Artist</label>
+        </div>
         <button type="submit">Sign Up</button>
       </form>
       <button className="google-btn">
