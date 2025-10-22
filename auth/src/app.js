@@ -5,11 +5,17 @@ import { Strategy as GoogleStrategy} from 'passport-google-oauth20';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import _config from './config/config.js';
+import cors from 'cors';
 
 const app = express();
 
 app.use(morgan('dev'));
 app.use(passport.initialize());
+app.use(cors({
+  origin: 'http://localhost:5173', // Adjust this to your client URL
+  credentials: true
+}))
+
 
 passport.use(new GoogleStrategy({
   clientID: _config.CLIENT_ID,
