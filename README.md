@@ -160,3 +160,8 @@ sequenceDiagram
 -   **Consumed Events:**
     -   `USER_CREATED`
     -   `NEW_SONG_UPLOADED`
+
+### ⚛️ Frontend Service
+-   **Description:** The user interface of Sangeet. This service is a single-page application (SPA) built with React that provides a rich and interactive user experience for interacting with the Sangeet platform.
+-   **Key Technologies:** `React`, `Vite`, `React Router`, `axios`.
+
